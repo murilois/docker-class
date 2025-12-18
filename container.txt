@@ -1,0 +1,46 @@
+docker run *tag*
+
+docker ps: Vê os containers // dá pra ver no docker desktop tb
+docker images: Vê as images
+
+docker run -d --name aplicativo app:v1
+
+docker logs --help //para ver as funções logs
+
+docker logs --details *id do container*
+para ver qual problema está rolando
+
+fazendo mapeamento(redirecionamento tb)
+docker run -d -p host:docker
+docker run -d -p 80:3000 --name aplicativo2 app:v1
+qualquer tráfego na porta 80 manda direto pra 3000 q é o container docker
+
+
+executar comandos dentro do container
+docker exec aplicativo2 ls
+
+
+Parar e Iniciar
+docker stop aplicativo2
+docker start aplicativo2
+
+remover
+docker rm aplicativo2 (Só para se não estiver rodando, mas dá pra forçar)
+
+Volumes persistentes
+Seria criar um container para criar local ou em cloud
+
+docker volume create app-dados
+
+docker volume inspect app-dados // ve as infos
+
+docker run -d -p 3030:3000 --name aplicativo3 -v app-dados:/app/dados app:v1.0.0
+
+app-dados fica salvo na maquina local com o volume dos dados do container e aí posso utilizar em um novo container caso ele seja removido
+
+
+Copiar arquivos do host para o container
+
+docker cp origem destino
+docker cp aplicativo3:/app/teste.txt .
+docker cp teste.txt aplicativo3:/app
