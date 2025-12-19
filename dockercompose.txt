@@ -1,0 +1,55 @@
+Aplicação tem um
+- Backend
+- Frontend
+O frontend comunica com o backend que comunica com o BD
+
+O Docker Compose é um arquivo que informa as partes que estão dentro da Aplicação
+
+docker-compose up // Cria as images e os containers da Aplicação
+
+Yaml
+- Data serialization
+Linguagem utilizada para escrever configurações
+
+docker-compose.yml (exemplo)
+
+version:"3.8"
+services:
+    frontend:
+        depends_on:
+            - backend
+        build:./frontend
+        ports:
+            - 3000:3000
+    backend:
+        depends_on:
+            - db
+        build:./backend
+        ports:
+            - 3001:3001
+        environment:
+            DB_URL: mongodb://db/vidly
+        command: ./docker-entrypoint.sh
+    db:
+        image: mongo:3.0-xenial
+        ports:
+            - 27017:21017
+        volumes:
+            - vidly:/data/db
+volumes:
+    vidly
+
+
+docker-compose --help(lembrar de estar sempre dentro do diretorio)
+
+A rede do docker
+docker-compose ps
+docker ps
+
+ifconfig (dentro de um shell de um id de um container)
+"consigo ver o endereçamento do ip"
+ping backend
+ping db
+o docker tem um dns resolver(uma rede virtual que o proprio docker cria)
+
+docker-compose logs (para ver os logs)
